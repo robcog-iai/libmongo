@@ -3,7 +3,7 @@
 	"Version": 1,
 	"VersionName": "1.0",
 	"FriendlyName": "libmongo",
-	"Description": "Unreal Engine plugin with MongoDB as third party library",
+	"Description": "Unreal Engine plugin with MongoDB drivers",
 	"Category": "Other",
 	"CreatedBy": "Andrei Haidu, Guan Jianyu",
 	"CreatedByURL": "http://haidu.eu",

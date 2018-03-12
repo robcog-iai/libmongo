@@ -1,12 +1,14 @@
 # libmongo
-Unreal Engine ThirdParty Module of MongoDB
+Unreal Engine ThirdParty Plugin with MongoDB drivers
+
 ## Quick Start
+
 * Git clone this package into your `Plugins` directory
-* Edit your project Build.cs file:
+* Edit your project `Build.cs` file by adding:
 
-  * add *`"libmongo"`* in *`PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore","libmongo" });`*
+  * *`"libmongo"`* in *`PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore","libmongo" });`*
 
-Use mongo c driver by including the required headers:
+Use mongo **c** driver by including the required headers:
 
 * `#include "mongoc.h"`
 * `#include "bson.h"`

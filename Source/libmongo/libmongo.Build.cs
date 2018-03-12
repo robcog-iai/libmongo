@@ -15,28 +15,34 @@ public class libmongo : ModuleRules
 	
 	private string ThirdPartyPath
     {
-        get { return Path.Combine(ModuleDirectory, "../ThirdParty/"); }
+        get { return Path.Combine(ModulePath, "../ThirdParty"); }
     }
+	
+	private string BinariesPath
+	{
+		get { return Path.GetFullPath(Path.Combine(ModulePath, "../../Binaries/")); }
+	}
 	
 	private void CopyToBinaries(string Filepath, ReadOnlyTargetRules Target)
     {
-        string BinariesDir = Path.Combine(ModulePath, "../../Binaries", Target.Platform.ToString());
         string Filename = Path.GetFileName(Filepath);
+		string ThirdPartyBinaryPath = Path.Combine(BinariesPath, "ThirdParty");
 
-        // Create the Binaries directory if it does not exist
-		if (!Directory.Exists(BinariesDir))	{
-			Directory.CreateDirectory(BinariesDir);
-		}	
-            
-		// Check if files exist, if not copy it
-        if (!File.Exists(Path.Combine(BinariesDir, Filename))) {
-			File.Copy(Filepath, Path.Combine(BinariesDir, Filename), true);
-		}
-            
+        if (!Directory.Exists(BinariesPath))
+            Directory.CreateDirectory(BinariesPath);
+		
+		if (!Directory.Exists(ThirdPartyBinaryPath))
+            Directory.CreateDirectory(ThirdPartyBinaryPath);
+
+        if (!File.Exists(Path.Combine(ThirdPartyBinaryPath, Filename)))
+            File.Copy(Filepath, Path.Combine(ThirdPartyBinaryPath, Filename), true);
     }
 	
 	public libmongo(ReadOnlyTargetRules Target) : base(Target)
 	{
+		//// Module importing only ThirdParty assets
+		//Type = ModuleType.External;
+
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		
 		string MongoPath = Path.Combine(ThirdPartyPath, "mongo-c-driver");
@@ -61,32 +67,33 @@ public class libmongo : ModuleRules
 			new string[]
 			{
 				"Core",
+				"Projects", // for IPluginManager
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
 			
 		
-		//PrivateDependencyModuleNames.AddRange(
-		//	new string[]
-		//	{
-		//		"CoreUObject",
-		//		"Engine",
-		//		"Slate",
-		//		"SlateCore",
-		//		// ... add private dependencies that you statically link with here ...	
-		//	}
-		//	);
+		PrivateDependencyModuleNames.AddRange(
+			new string[]
+			{
+				//"CoreUObject",
+				//"Engine",
+				//"Slate",
+				//"SlateCore",
+				// ... add private dependencies that you statically link with here ...	
+			}
+			);
 		
 		
-		//DynamicallyLoadedModuleNames.AddRange(
-		//	new string[]
-		//	{
-		//		// ... add any modules that your module loads dynamically here ...
-		//	}
-		//	);
+		DynamicallyLoadedModuleNames.AddRange(
+			new string[]
+			{
+				// ... add any modules that your module loads dynamically here ...
+			}
+			);
 			
 		if (Target.Platform == UnrealTargetPlatform.Win64)
-        {
+		{
             PublicAdditionalLibraries.Add(Path.Combine(MongoPath, "lib", "bson-1.0.lib"));
             PublicIncludePaths.Add(Path.Combine(MongoPath, "include", "libbson-1.0"));
             CopyToBinaries(Path.Combine(MongoPath, "bin", "libbson-1.0.dll"), Target);
@@ -95,6 +102,8 @@ public class libmongo : ModuleRules
             PublicAdditionalLibraries.Add(Path.Combine(MongoPath, "lib", "mongoc-1.0.lib"));
             PublicIncludePaths.Add(Path.Combine(MongoPath, "include", "libmongoc-1.0"));
             CopyToBinaries(Path.Combine(MongoPath, "bin", "libmongoc-1.0.dll"), Target);
+			
+			Definitions.Add("WITH_MONGO=1");
         }
 	}
 }
