@@ -46,7 +46,7 @@ public class libmongo : ModuleRules
         PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		
         string MongoPath = Path.Combine(ThirdPartyPath, "mongo-c-driver");
-		
+
         PublicIncludePaths.AddRange(
         new string[] {
 	        "libmongo/Public"
@@ -103,7 +103,7 @@ public class libmongo : ModuleRules
             PublicIncludePaths.Add(Path.Combine(MongoPath, "include", "libmongoc-1.0"));
             CopyToBinaries(Path.Combine(MongoPath, "bin", "libmongoc-1.0.dll"), Target);
 
-            Definitions.Add("WITH_MONGO=1");
+            PublicDefinitions.Add("WITH_MONGO=1");
         }
     }
 }
