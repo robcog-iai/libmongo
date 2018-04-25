@@ -4,7 +4,7 @@
 	"VersionName": "1.0",
 	"FriendlyName": "libmongo",
 	"Description": "Unreal Engine plugin with MongoDB drivers",
-	"Category": "Other",
+	"Category": "RobCoG",
 	"CreatedBy": "Andrei Haidu, Guan Jianyu",
 	"CreatedByURL": "http://haidu.eu",
 	"DocsURL": "https://github.com/robcog-iai/libmongo",
