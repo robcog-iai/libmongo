@@ -26,16 +26,14 @@ public class libmongo : ModuleRules
 	private void CopyToBinaries(string Filepath, ReadOnlyTargetRules Target)
 	{
 		string Filename = Path.GetFileName(Filepath);
-		string ThirdPartyBinaryPath = Path.Combine(BinariesPath, "ThirdParty");
+		//string ThirdPartyBinaryPath = Path.Combine(BinariesPath, "ThirdParty");
 
-		if (!Directory.Exists(BinariesPath))
-			Directory.CreateDirectory(BinariesPath);
-		
-		if (!Directory.Exists(ThirdPartyBinaryPath))
-			Directory.CreateDirectory(ThirdPartyBinaryPath);
+		string BinariesPlatformPath = Path.Combine(BinariesPath, Target.Platform.ToString());
+		if (!Directory.Exists(BinariesPlatformPath))
+			Directory.CreateDirectory(BinariesPlatformPath);
 
-		if (!File.Exists(Path.Combine(ThirdPartyBinaryPath, Filename)))
-			File.Copy(Filepath, Path.Combine(ThirdPartyBinaryPath, Filename), true);
+		if (!File.Exists(Path.Combine(BinariesPlatformPath, Filename)))
+			File.Copy(Filepath, Path.Combine(BinariesPlatformPath, Filename), true);
 	}
 	
 	public libmongo(ReadOnlyTargetRules Target) : base(Target)
