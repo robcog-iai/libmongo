@@ -40,14 +40,16 @@ public class libmongo : ModuleRules
 	{
 		//// Module importing only ThirdParty assets
 		//Type = ModuleType.External;
-
+		
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
+
+		bEnableUndefinedIdentifierWarnings = false;
 		
 		string MongoPath = Path.Combine(ThirdPartyPath, "mongo-c-driver");
 
 		PublicIncludePaths.AddRange(
 		new string[] {
-			"libmongo/Public"
+			//"libmongo/Public"
 			// ... add public include paths required here ...
 		}
 		);
@@ -55,7 +57,7 @@ public class libmongo : ModuleRules
 		
 		PrivateIncludePaths.AddRange(
 		new string[] {
-			"libmongo/Private",
+			//"libmongo/Private",
 			// ... add other private include paths required here ...
 		}
 		);
