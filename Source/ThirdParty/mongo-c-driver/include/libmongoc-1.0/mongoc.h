@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 MongoDB, Inc.
+ * Copyright 2018-present MongoDB, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,54 +14,5 @@
  * limitations under the License.
  */
 
-
-#ifndef MONGOC_H
-#define MONGOC_H
-
-
-#include <bson.h>
-
-#define MONGOC_INSIDE
-#include "mongoc-macros.h"
-#include "mongoc-apm.h"
-#include "mongoc-bulk-operation.h"
-#include "mongoc-change-stream.h"
-#include "mongoc-client.h"
-#include "mongoc-client-pool.h"
-#include "mongoc-collection.h"
-#include "mongoc-config.h"
-#include "mongoc-cursor.h"
-#include "mongoc-database.h"
-#include "mongoc-index.h"
-#include "mongoc-error.h"
-#include "mongoc-flags.h"
-#include "mongoc-gridfs.h"
-#include "mongoc-gridfs-file.h"
-#include "mongoc-gridfs-file-list.h"
-#include "mongoc-gridfs-file-page.h"
-#include "mongoc-host-list.h"
-#include "mongoc-init.h"
-#include "mongoc-matcher.h"
-#include "mongoc-handshake.h"
-#include "mongoc-opcode.h"
-#include "mongoc-log.h"
-#include "mongoc-socket.h"
-#include "mongoc-client-session.h"
-#include "mongoc-stream.h"
-#include "mongoc-stream-buffered.h"
-#include "mongoc-stream-file.h"
-#include "mongoc-stream-gridfs.h"
-#include "mongoc-stream-socket.h"
-#include "mongoc-uri.h"
-#include "mongoc-write-concern.h"
-#include "mongoc-version.h"
-#include "mongoc-version-functions.h"
-#ifdef MONGOC_ENABLE_SSL
-#include "mongoc-rand.h"
-#include "mongoc-stream-tls.h"
-#include "mongoc-ssl.h"
-#endif
-#undef MONGOC_INSIDE
-
-
-#endif /* MONGOC_H */
+/* Including mongoc.h is superseded. Use mongoc/mongoc.h instead. */
+#include "mongoc/mongoc.h"

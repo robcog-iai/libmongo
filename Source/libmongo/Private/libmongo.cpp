@@ -17,13 +17,15 @@ void FlibmongoModule::StartupModule()
 	FString BaseDir = IPluginManager::Get().FindPlugin("libmongo")->GetBaseDir();
 
 	// Add on the relative location of the third party dll and load it
-	FString LibraryPath;
+	FString MongoCLibraryPath;
+	FString MongoCXXLibraryPath;
 #if PLATFORM_WINDOWS
-	LibraryPath = FPaths::Combine(*BaseDir, TEXT("Binaries/ThirdParty/libmongoc-1.0.dll"));
+	MongoCLibraryPath = FPaths::Combine(*BaseDir, TEXT("Binaries/ThirdParty/libmongoc-1.0.dll"));
+	MongoCXXLibraryPath = FPaths::Combine(*BaseDir, TEXT("Binaries/ThirdParty/mongocxx.dll"));
 #endif // PLATFORM_WINDOWS
 
-	LibraryHandle = !LibraryPath.IsEmpty() ? FPlatformProcess::GetDllHandle(*LibraryPath) : nullptr;
-
+	LibraryHandle = !MongoCLibraryPath.IsEmpty() ? FPlatformProcess::GetDllHandle(*MongoCLibraryPath) : nullptr;
+	// TODO see if dynamic loading of libraries is needed
 	if (LibraryHandle)
 	{
 		// Call the test function in the third party library that opens a message box

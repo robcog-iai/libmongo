@@ -13,13 +13,15 @@
 # limitations under the License.
 
 set (BSON_MAJOR_VERSION 1)
-set (BSON_MINOR_VERSION 9)
-set (BSON_MICRO_VERSION 2)
-set (BSON_VERSION 1.9.2)
+set (BSON_MINOR_VERSION 13)
+set (BSON_MICRO_VERSION 0)
+set (BSON_VERSION 1.13.0)
 
-# In a pure-CMake project this is inserted by configure_package_config_file(),
-# but we want to be able to build this file the same from the Autotools, so
-# let's manually insert this code.
+
+####### Expanded from @PACKAGE_INIT@ by configure_package_config_file() #######
+####### Any changes to this file will be overwritten by the next CMake run ####
+####### The input file was libbson-1.0-config.cmake.in                            ########
+
 get_filename_component(PACKAGE_PREFIX_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 macro(set_and_check _var _file)
@@ -29,13 +31,25 @@ macro(set_and_check _var _file)
   endif()
 endmacro()
 
+macro(check_required_components _NAME)
+  foreach(comp ${${_NAME}_FIND_COMPONENTS})
+    if(NOT ${_NAME}_${comp}_FOUND)
+      if(${_NAME}_FIND_REQUIRED_${comp})
+        set(${_NAME}_FOUND FALSE)
+      endif()
+    endif()
+  endforeach()
+endmacro()
+
+####################################################################################
+
 set_and_check (BSON_INCLUDE_DIRS "${PACKAGE_PREFIX_DIR}/include/libbson-1.0")
 
 # We want to provide an absolute path to the library and we know the
 # directory and the base name, but not the suffix, so we use CMake's
-# find_library() to pick that up.  Users can override this by configuring
+# find_library () to pick that up.  Users can override this by configuring
 # BSON_LIBRARY themselves.
-find_library(BSON_LIBRARY bson-1.0 PATHS "${PACKAGE_PREFIX_DIR}/lib" NO_DEFAULT_PATH)
+find_library (BSON_LIBRARY bson-1.0 PATHS "${PACKAGE_PREFIX_DIR}/lib" NO_DEFAULT_PATH)
 
 set (BSON_LIBRARIES ${BSON_LIBRARY})
 

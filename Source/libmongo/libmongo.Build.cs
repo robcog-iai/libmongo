@@ -45,7 +45,8 @@ public class libmongo : ModuleRules
 
 		bEnableUndefinedIdentifierWarnings = false;
 		
-		string MongoPath = Path.Combine(ThirdPartyPath, "mongo-c-driver");
+		string MongoCPath = Path.Combine(ThirdPartyPath, "mongo-c-driver");
+		string MongoCXXPath = Path.Combine(ThirdPartyPath, "mongo-cxx-driver");
 
 		PublicIncludePaths.AddRange(
 		new string[] {
@@ -94,14 +95,25 @@ public class libmongo : ModuleRules
 
 		if (Target.Platform == UnrealTargetPlatform.Win64)
 		{
-			PublicAdditionalLibraries.Add(Path.Combine(MongoPath, "lib", "bson-1.0.lib"));
-			PublicIncludePaths.Add(Path.Combine(MongoPath, "include", "libbson-1.0"));
-			CopyToBinaries(Path.Combine(MongoPath, "bin", "libbson-1.0.dll"), Target);
-
-
-			PublicAdditionalLibraries.Add(Path.Combine(MongoPath, "lib", "mongoc-1.0.lib"));
-			PublicIncludePaths.Add(Path.Combine(MongoPath, "include", "libmongoc-1.0"));
-			CopyToBinaries(Path.Combine(MongoPath, "bin", "libmongoc-1.0.dll"), Target);
+			// C
+			// bson
+			PublicAdditionalLibraries.Add(Path.Combine(MongoCPath, "lib", "bson-1.0.lib"));
+			PublicIncludePaths.Add(Path.Combine(MongoCPath, "include", "libbson-1.0"));
+			CopyToBinaries(Path.Combine(MongoCPath, "bin", "libbson-1.0.dll"), Target);
+			// mongo
+			PublicAdditionalLibraries.Add(Path.Combine(MongoCPath, "lib", "mongoc-1.0.lib"));
+			PublicIncludePaths.Add(Path.Combine(MongoCPath, "include", "libmongoc-1.0"));
+			CopyToBinaries(Path.Combine(MongoCPath, "bin", "libmongoc-1.0.dll"), Target);
+			
+			// CXX
+			// bson
+			PublicAdditionalLibraries.Add(Path.Combine(MongoCXXPath, "lib", "bsoncxx.lib"));
+			PublicIncludePaths.Add(Path.Combine(MongoCXXPath, "include", "bsoncxx"));
+			CopyToBinaries(Path.Combine(MongoCXXPath, "bin", "bsoncxx.dll"), Target);
+			// mongo
+			PublicAdditionalLibraries.Add(Path.Combine(MongoCXXPath, "lib", "mongocxx.lib"));
+			PublicIncludePaths.Add(Path.Combine(MongoCXXPath, "include", "mongocxx"));
+			CopyToBinaries(Path.Combine(MongoCXXPath, "bin", "mongocxx.dll"), Target);
 
 			PublicDefinitions.Add("WITH_MONGO=1");
 		}
