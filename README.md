@@ -1,5 +1,8 @@
 # libmongo
-Unreal Engine ThirdParty Plugin with MongoDB drivers
+
+* Unreal Engine ThirdParty Plugin with MongoDB drivers
+
+* Supported engine version: **UE 4.21**
 
 ## Quick Start
 
@@ -8,7 +11,20 @@ Unreal Engine ThirdParty Plugin with MongoDB drivers
 
   * *`"libmongo"`* in *`PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore","libmongo" });`*
 
-Use mongo **c** driver by including the required headers:
+Use the **c** library by including the required headers:
 
 * `#include "mongoc.h"`
 * `#include "bson.h"`
+
+Use the **c++** library by including the required headers:
+
+* `#include <bsoncxx/builder/stream/document.hpp>`
+* `#include <bsoncxx/json.hpp>`
+* `#include <mongocxx/client.hpp>`
+* `#include <mongocxx/instance.hpp>`
+* `..`
+
+
+
+
+
