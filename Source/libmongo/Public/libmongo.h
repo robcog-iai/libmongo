@@ -15,7 +15,7 @@ public:
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
 	
-	private:
-	/** Handle to the test dll we will load */
-	void*	LibraryHandle;
+	//private:
+	///** Handle to the test dll we will load */
+	//void* LibraryHandle;
 };
