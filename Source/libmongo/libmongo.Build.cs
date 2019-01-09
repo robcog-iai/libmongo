@@ -38,10 +38,8 @@ public class libmongo : ModuleRules
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		// !!!
-		// Modules that are using libmongo need this in order to package the project
-		//bEnableUndefinedIdentifierWarnings = false;
-		//bEnableExceptions = true;
+		bEnableUndefinedIdentifierWarnings = false;
+		bEnableExceptions = true;
 
 		string MongoCPath = Path.Combine(ThirdPartyPath, "mongo-c-driver");
 		string MongoCXXPath = Path.Combine(ThirdPartyPath, "mongo-cxx-driver");
@@ -107,7 +105,6 @@ public class libmongo : ModuleRules
 			CopyToBinaries(Path.Combine(MongoCXXPath, "bin", "bsoncxx.dll"), Target);
 			CopyToBinaries(Path.Combine(MongoCXXPath, "bin", "mongocxx.dll"), Target);
 			
-
 			//PublicDelayLoadDLLs.Add("*.dll");
 		}
 	}
