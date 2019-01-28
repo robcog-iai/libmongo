@@ -89,8 +89,8 @@ public class libmongo : ModuleRules
 			// .lib
 			PublicAdditionalLibraries.Add(Path.Combine(MongoCPath, "lib", "bson-1.0.lib"));
 			PublicAdditionalLibraries.Add(Path.Combine(MongoCPath, "lib", "mongoc-1.0.lib"));
-			PublicAdditionalLibraries.Add(Path.Combine(MongoCXXPath, "lib", "bsoncxx.lib"));
-			PublicAdditionalLibraries.Add(Path.Combine(MongoCXXPath, "lib", "mongocxx.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(MongoCXXPath, "lib", "bsoncxx-static.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(MongoCXXPath, "lib", "mongocxx-static.lib"));
 
 			// .h
 			PublicIncludePaths.Add(Path.Combine(MongoCPath, "include", "libbson-1.0"));
@@ -100,10 +100,10 @@ public class libmongo : ModuleRules
 			PublicIncludePaths.Add(Path.Combine(BoostPath));
 
 			// .dll copy to /Binaries
-			CopyToBinaries(Path.Combine(MongoCPath, "bin", "libbson-1.0.dll"), Target);
-			CopyToBinaries(Path.Combine(MongoCPath, "bin", "libmongoc-1.0.dll"), Target);
-			CopyToBinaries(Path.Combine(MongoCXXPath, "bin", "bsoncxx.dll"), Target);
-			CopyToBinaries(Path.Combine(MongoCXXPath, "bin", "mongocxx.dll"), Target);
+			//CopyToBinaries(Path.Combine(MongoCPath, "bin", "libbson-1.0.dll"), Target);
+			//CopyToBinaries(Path.Combine(MongoCPath, "bin", "libmongoc-1.0.dll"), Target);
+			//CopyToBinaries(Path.Combine(MongoCXXPath, "bin", "bsoncxx.dll"), Target);
+			//CopyToBinaries(Path.Combine(MongoCXXPath, "bin", "mongocxx.dll"), Target);
 			
 			//PublicDelayLoadDLLs.Add("*.dll");
 		}
