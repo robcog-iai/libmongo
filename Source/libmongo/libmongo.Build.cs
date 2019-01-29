@@ -37,13 +37,12 @@ public class libmongo : ModuleRules
 	public libmongo(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
+		
+		// Use this if the module does not implement a IModuleInterface
+		//Type = ModuleType.External;
 
 		bEnableUndefinedIdentifierWarnings = false;
 		bEnableExceptions = true;
-
-		string MongoCPath = Path.Combine(ThirdPartyPath, "mongo-c-driver");
-		string MongoCXXPath = Path.Combine(ThirdPartyPath, "mongo-cxx-driver");
-		string BoostPath = Path.Combine(ThirdPartyPath, "boost_1_69_0");
 
 		PublicIncludePaths.AddRange(
 		new string[] {
@@ -63,7 +62,7 @@ public class libmongo : ModuleRules
 		new string[]
 		{
 			"Core",
-			//"Projects", // for IPluginManager
+			"Projects", // FPlatformProcess::GetDllHandle
 			// ... add other public dependencies that you statically link with here ...
 		}
 		);
@@ -84,28 +83,44 @@ public class libmongo : ModuleRules
 		}
 		);
 
+		string MongoCDir = Path.Combine(ThirdPartyPath, "mongo-c-driver");
+		string MongoCXXDir = Path.Combine(ThirdPartyPath, "mongo-cxx-driver");
+		string BoostDir = Path.Combine(ThirdPartyPath, "boost_1_69_0");
+
 		if (Target.Platform == UnrealTargetPlatform.Win64)
 		{
-			// .lib
-			PublicAdditionalLibraries.Add(Path.Combine(MongoCPath, "lib", "bson-1.0.lib"));
-			PublicAdditionalLibraries.Add(Path.Combine(MongoCPath, "lib", "mongoc-1.0.lib"));
-			PublicAdditionalLibraries.Add(Path.Combine(MongoCXXPath, "lib", "bsoncxx.lib"));
-			PublicAdditionalLibraries.Add(Path.Combine(MongoCXXPath, "lib", "mongocxx.lib"));
-
 			// .h
-			PublicIncludePaths.Add(Path.Combine(MongoCPath, "include", "libbson-1.0"));
-			PublicIncludePaths.Add(Path.Combine(MongoCPath, "include", "libmongoc-1.0"));
-			PublicIncludePaths.Add(Path.Combine(MongoCXXPath, "include", "bsoncxx", "v_noabi"));
-			PublicIncludePaths.Add(Path.Combine(MongoCXXPath, "include", "mongocxx", "v_noabi"));
-			PublicIncludePaths.Add(Path.Combine(BoostPath));
+			PublicIncludePaths.Add(Path.Combine(MongoCDir, "include", "libbson-1.0"));
+			PublicIncludePaths.Add(Path.Combine(MongoCDir, "include", "libmongoc-1.0"));
+			PublicIncludePaths.Add(Path.Combine(MongoCXXDir, "include", "bsoncxx", "v_noabi"));
+			PublicIncludePaths.Add(Path.Combine(MongoCXXDir, "include", "mongocxx", "v_noabi"));
+			PublicIncludePaths.Add(Path.Combine(BoostDir));
 
-			// .dll copy to /Binaries
-			CopyToBinaries(Path.Combine(MongoCPath, "bin", "libbson-1.0.dll"), Target);
-			CopyToBinaries(Path.Combine(MongoCPath, "bin", "libmongoc-1.0.dll"), Target);
-			CopyToBinaries(Path.Combine(MongoCXXPath, "bin", "bsoncxx.dll"), Target);
-			CopyToBinaries(Path.Combine(MongoCXXPath, "bin", "mongocxx.dll"), Target);
-			
-			//PublicDelayLoadDLLs.Add("*.dll");
+			// .lib
+			PublicAdditionalLibraries.Add(Path.Combine(MongoCDir, "lib", "bson-1.0.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(MongoCDir, "lib", "mongoc-1.0.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(MongoCXXDir, "lib", "bsoncxx.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(MongoCXXDir, "lib", "mongocxx.lib"));
+
+			//// List of delay load DLLs - typically used for External (third party) modules
+			//// see (FPlatformProcess::GetDllHandle(Path)) for loading
+			//PublicDelayLoadDLLs.Add(Path.Combine(MongoCDir, "bin", "libbson-1.0.dll"));
+			//PublicDelayLoadDLLs.Add(Path.Combine(MongoCDir, "bin", "libmongoc-1.0.dll"));
+			//PublicDelayLoadDLLs.Add(Path.Combine(MongoCXXDir, "bin", "bsoncxx.dll"));
+			//PublicDelayLoadDLLs.Add(Path.Combine(MongoCXXDir, "bin", "mongocxx.dll"));
+
+			// Copy dll's to plugin /Binaries
+			CopyToBinaries(Path.Combine(MongoCDir, "bin", "libbson-1.0.dll"), Target);
+			CopyToBinaries(Path.Combine(MongoCDir, "bin", "libmongoc-1.0.dll"), Target);
+			CopyToBinaries(Path.Combine(MongoCXXDir, "bin", "bsoncxx.dll"), Target);
+			CopyToBinaries(Path.Combine(MongoCXXDir, "bin", "mongocxx.dll"), Target);
+
+			//// List of files which this module depends on at runtime. These files will be staged along with the target.
+			//RuntimeDependencies.Add(Path.Combine(MongoCDir, "bin", "libbson-1.0.dll"));
+			//RuntimeDependencies.Add(Path.Combine(MongoCDir, "bin", "libmongoc-1.0.dll"));
+			//RuntimeDependencies.Add(Path.Combine(MongoCXXDir, "bin", "bsoncxx.dll"));
+			//RuntimeDependencies.Add(Path.Combine(MongoCXXDir, "bin", "mongocxx.dll"));
+
 		}
 	}
 }

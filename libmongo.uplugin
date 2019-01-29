@@ -16,7 +16,7 @@
 	"Modules": [
 		{
 			"Name": "libmongo",
-			"Type": "Developer",
+			"Type": "Runtime",
 			"LoadingPhase": "Default"
 		}
 	]

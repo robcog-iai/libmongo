@@ -15,7 +15,8 @@ public:
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
 	
-	//private:
-	///** Handle to the test dll we will load */
-	//void* LibraryHandle;
+	private:
+	// Loads the PublicDelayLoadDLLs from the given paths
+	TArray<FString> DllPaths;
+	TArray<void*> DllHandles;
 };
