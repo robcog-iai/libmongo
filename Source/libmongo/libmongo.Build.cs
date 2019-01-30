@@ -18,11 +18,13 @@ public class libmongo : ModuleRules
 		get { return Path.GetFullPath(Path.Combine(ModuleDirectory, "../../Binaries/")); }
 	}
 	
-	private void CopyToBinaries(string Filepath, ReadOnlyTargetRules Target)
+	private void CopyToBinaries(string SourceFilePath, ReadOnlyTargetRules Target)
 	{
-		string Filename = Path.GetFileName(Filepath);
-
+		string Filename = Path.GetFileName(SourceFilePath);
 		string BinariesPlatformPath = Path.Combine(BinariesPath, Target.Platform.ToString());
+
+		//System.Console.WriteLine("Copying {0} to {1}", SourceFilePath, BinariesPlatformPath);
+
 		if (!Directory.Exists(BinariesPlatformPath))
 		{
 			Directory.CreateDirectory(BinariesPlatformPath);
@@ -30,7 +32,7 @@ public class libmongo : ModuleRules
 
 		if (!File.Exists(Path.Combine(BinariesPlatformPath, Filename)))
 		{
-			File.Copy(Filepath, Path.Combine(BinariesPlatformPath, Filename), true);
+			File.Copy(SourceFilePath, Path.Combine(BinariesPlatformPath, Filename), true);
 		}
 	}
 	
