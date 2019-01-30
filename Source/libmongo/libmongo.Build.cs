@@ -17,22 +17,7 @@ public class libmongo : ModuleRules
 	{
 		get { return Path.GetFullPath(Path.Combine(ModuleDirectory, "../../Binaries/")); }
 	}
-	
-	private void CopyToBinaries(string Filepath, ReadOnlyTargetRules Target)
-	{
-		string Filename = Path.GetFileName(Filepath);
 
-		string BinariesPlatformPath = Path.Combine(BinariesPath, Target.Platform.ToString());
-		if (!Directory.Exists(BinariesPlatformPath))
-		{
-			Directory.CreateDirectory(BinariesPlatformPath);
-		}
-
-		if (!File.Exists(Path.Combine(BinariesPlatformPath, Filename)))
-		{
-			File.Copy(Filepath, Path.Combine(BinariesPlatformPath, Filename), true);
-		}
-	}
 	
 	public libmongo(ReadOnlyTargetRules Target) : base(Target)
 	{
@@ -87,10 +72,14 @@ public class libmongo : ModuleRules
 		if (Target.Platform == UnrealTargetPlatform.Win64)
 		{
 			// .lib
-			PublicAdditionalLibraries.Add(Path.Combine(MongoCPath, "lib", "bson-1.0.lib"));
-			PublicAdditionalLibraries.Add(Path.Combine(MongoCPath, "lib", "mongoc-1.0.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(MongoCPath, "lib", "bson-static-1.0.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(MongoCPath, "lib", "mongoc-static-1.0.lib"));
 			PublicAdditionalLibraries.Add(Path.Combine(MongoCXXPath, "lib", "bsoncxx-static.lib"));
 			PublicAdditionalLibraries.Add(Path.Combine(MongoCXXPath, "lib", "mongocxx-static.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(MongoCPath, "lib", "bson-1.0.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(MongoCPath, "lib", "mongoc-1.0.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(MongoCXXPath, "lib", "bsoncxx.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(MongoCXXPath, "lib", "mongocxx.lib"));
 
 			// .h
 			PublicIncludePaths.Add(Path.Combine(MongoCPath, "include", "libbson-1.0"));
@@ -98,14 +87,6 @@ public class libmongo : ModuleRules
 			PublicIncludePaths.Add(Path.Combine(MongoCXXPath, "include", "bsoncxx", "v_noabi"));
 			PublicIncludePaths.Add(Path.Combine(MongoCXXPath, "include", "mongocxx", "v_noabi"));
 			PublicIncludePaths.Add(Path.Combine(BoostPath));
-
-			// .dll copy to /Binaries
-			//CopyToBinaries(Path.Combine(MongoCPath, "bin", "libbson-1.0.dll"), Target);
-			//CopyToBinaries(Path.Combine(MongoCPath, "bin", "libmongoc-1.0.dll"), Target);
-			//CopyToBinaries(Path.Combine(MongoCXXPath, "bin", "bsoncxx.dll"), Target);
-			//CopyToBinaries(Path.Combine(MongoCXXPath, "bin", "mongocxx.dll"), Target);
-			
-			//PublicDelayLoadDLLs.Add("*.dll");
 		}
 	}
 }
