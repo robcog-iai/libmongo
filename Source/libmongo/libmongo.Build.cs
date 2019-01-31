@@ -1,6 +1,5 @@
 // Copyright 2019, Institute for Artificial Intelligence - University of Bremen
-// Author: Andrei Haidu (http://haidu.eu)
-// Author: Guan Jianyu
+// Author: Andrei Haidu (http://haidu.eu), Guan Jianyu
 
 using UnrealBuildTool;
 using System;
@@ -39,12 +38,15 @@ public class libmongo : ModuleRules
 	public libmongo(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
-		
+
 		// Use this if the module does not implement a IModuleInterface
+		// if you are setting up paths for pre-compiled binaries.
 		//Type = ModuleType.External;
 
 		bEnableUndefinedIdentifierWarnings = false;
 		bEnableExceptions = true;
+		//bUseRTTI = true;
+
 
 		PublicIncludePaths.AddRange(
 		new string[] {
@@ -63,6 +65,8 @@ public class libmongo : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 		new string[]
 		{
+			//"MongoC",
+			//"MongoCxx",
 			"Core",
 			"Projects", // FPlatformProcess::GetDllHandle
 			// ... add other public dependencies that you statically link with here ...
