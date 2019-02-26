@@ -7,6 +7,29 @@ using System.IO;
 
 public class MongoCxx : ModuleRules
 {
+	private string BinariesPath
+	{
+		get { return Path.GetFullPath(Path.Combine(ModuleDirectory, "../../Binaries/")); }
+	}
+
+	private void CopyToBinaries(string SourceFilePath, ReadOnlyTargetRules Target)
+	{
+		string Filename = Path.GetFileName(SourceFilePath);
+		string BinariesPlatformPath = Path.Combine(BinariesPath, Target.Platform.ToString());
+
+		//System.Console.WriteLine("Copying {0} to {1}", SourceFilePath, BinariesPlatformPath);
+
+		if (!Directory.Exists(BinariesPlatformPath))
+		{
+			Directory.CreateDirectory(BinariesPlatformPath);
+		}
+
+		if (!File.Exists(Path.Combine(BinariesPlatformPath, Filename)))
+		{
+			File.Copy(SourceFilePath, Path.Combine(BinariesPlatformPath, Filename), true);
+		}
+	}
+
 	public MongoCxx(ReadOnlyTargetRules Target) : base(Target)
 	{
 		// We are just setting up paths for pre-compiled binaries.
@@ -35,8 +58,11 @@ public class MongoCxx : ModuleRules
 
 			// .dll
 			string BinDir = ModuleDirectory + "/mongo-cxx-driver/bin/";
-			RuntimeDependencies.Add(Path.Combine(BinDir, "bsoncxx.dll"));
-			RuntimeDependencies.Add(Path.Combine(BinDir, "mongocxx.dll"));
+			//RuntimeDependencies.Add(Path.Combine(BinDir, "bsoncxx.dll"));
+			//RuntimeDependencies.Add(Path.Combine(BinDir, "mongocxx.dll"));
+
+			CopyToBinaries(Path.Combine(BinDir, "bsoncxx.dll"), Target);
+			CopyToBinaries(Path.Combine(BinDir, "mongocxx.dll"), Target);
 		}
 	}
 }

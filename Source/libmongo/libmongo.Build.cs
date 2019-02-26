@@ -2,131 +2,36 @@
 // Author: Andrei Haidu (http://haidu.eu), Guan Jianyu
 
 using UnrealBuildTool;
-using System;
-using System.IO;
+
 
 public class libmongo : ModuleRules
 {
-	private string ThirdPartyPath
-	{
-		get { return Path.Combine(ModuleDirectory, "../ThirdParty"); }
-	}
-	
-	private string BinariesPath
-	{
-		get { return Path.GetFullPath(Path.Combine(ModuleDirectory, "../../Binaries/")); }
-	}
-	
-	private void CopyToBinaries(string SourceFilePath, ReadOnlyTargetRules Target)
-	{
-		string Filename = Path.GetFileName(SourceFilePath);
-		string BinariesPlatformPath = Path.Combine(BinariesPath, Target.Platform.ToString());
-
-		//System.Console.WriteLine("Copying {0} to {1}", SourceFilePath, BinariesPlatformPath);
-
-		if (!Directory.Exists(BinariesPlatformPath))
-		{
-			Directory.CreateDirectory(BinariesPlatformPath);
-		}
-
-		if (!File.Exists(Path.Combine(BinariesPlatformPath, Filename)))
-		{
-			File.Copy(SourceFilePath, Path.Combine(BinariesPlatformPath, Filename), true);
-		}
-	}
-	
 	public libmongo(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		// Use this if the module does not implement a IModuleInterface
-		// if you are setting up paths for pre-compiled binaries.
-		//Type = ModuleType.External;
-
-		bEnableUndefinedIdentifierWarnings = false;
-		bEnableExceptions = true;
-		//bUseRTTI = true;
-
-
 		PublicIncludePaths.AddRange(
-		new string[] {
-			// ... add public include paths required here ...
-		}
+			new string[] {
+			}
 		);
-				
 		
 		PrivateIncludePaths.AddRange(
-		new string[] {
-			// ... add other private include paths required here ...
-		}
+			new string[] {
+			}
 		);
 			
 		
 		PublicDependencyModuleNames.AddRange(
-		new string[]
-		{
-			//"MongoC",
-			//"MongoCxx",
-			"Core",
-			"Projects", // FPlatformProcess::GetDllHandle
-			// ... add other public dependencies that you statically link with here ...
-		}
+			new string[]{
+			}
 		);
-			
 		
 		PrivateDependencyModuleNames.AddRange(
 		new string[]
 		{
-			// ... add private dependencies that you statically link with here ...	
+			"Core",
+			"Projects", // FPlatformProcess::GetDllHandle
 		}
 		);
-		
-		
-		DynamicallyLoadedModuleNames.AddRange(
-		new string[]
-		{
-			// ... add any modules that your module loads dynamically here ...
-		}
-		);
-
-		string MongoCDir = Path.Combine(ThirdPartyPath, "mongo-c-driver");
-		string MongoCXXDir = Path.Combine(ThirdPartyPath, "mongo-cxx-driver");
-		string BoostDir = Path.Combine(ThirdPartyPath, "boost_1_69_0");
-
-		if (Target.Platform == UnrealTargetPlatform.Win64)
-		{
-			// .h
-			PublicIncludePaths.Add(Path.Combine(MongoCDir, "include", "libbson-1.0"));
-			PublicIncludePaths.Add(Path.Combine(MongoCDir, "include", "libmongoc-1.0"));
-			PublicIncludePaths.Add(Path.Combine(MongoCXXDir, "include", "bsoncxx", "v_noabi"));
-			PublicIncludePaths.Add(Path.Combine(MongoCXXDir, "include", "mongocxx", "v_noabi"));
-			PublicIncludePaths.Add(Path.Combine(BoostDir));
-
-			// .lib
-			PublicAdditionalLibraries.Add(Path.Combine(MongoCDir, "lib", "bson-1.0.lib"));
-			PublicAdditionalLibraries.Add(Path.Combine(MongoCDir, "lib", "mongoc-1.0.lib"));
-			PublicAdditionalLibraries.Add(Path.Combine(MongoCXXDir, "lib", "bsoncxx.lib"));
-			PublicAdditionalLibraries.Add(Path.Combine(MongoCXXDir, "lib", "mongocxx.lib"));
-
-			//// List of delay load DLLs - typically used for External (third party) modules
-			//// see (FPlatformProcess::GetDllHandle(Path)) for loading
-			//PublicDelayLoadDLLs.Add(Path.Combine(MongoCDir, "bin", "libbson-1.0.dll"));
-			//PublicDelayLoadDLLs.Add(Path.Combine(MongoCDir, "bin", "libmongoc-1.0.dll"));
-			//PublicDelayLoadDLLs.Add(Path.Combine(MongoCXXDir, "bin", "bsoncxx.dll"));
-			//PublicDelayLoadDLLs.Add(Path.Combine(MongoCXXDir, "bin", "mongocxx.dll"));
-
-			// Copy dll's to plugin /Binaries
-			CopyToBinaries(Path.Combine(MongoCDir, "bin", "libbson-1.0.dll"), Target);
-			CopyToBinaries(Path.Combine(MongoCDir, "bin", "libmongoc-1.0.dll"), Target);
-			CopyToBinaries(Path.Combine(MongoCXXDir, "bin", "bsoncxx.dll"), Target);
-			CopyToBinaries(Path.Combine(MongoCXXDir, "bin", "mongocxx.dll"), Target);
-
-			//// List of files which this module depends on at runtime. These files will be staged along with the target.
-			//RuntimeDependencies.Add(Path.Combine(MongoCDir, "bin", "libbson-1.0.dll"));
-			//RuntimeDependencies.Add(Path.Combine(MongoCDir, "bin", "libmongoc-1.0.dll"));
-			//RuntimeDependencies.Add(Path.Combine(MongoCXXDir, "bin", "bsoncxx.dll"));
-			//RuntimeDependencies.Add(Path.Combine(MongoCXXDir, "bin", "mongocxx.dll"));
-
-		}
 	}
 }
