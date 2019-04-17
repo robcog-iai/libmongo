@@ -62,5 +62,19 @@ public class MongoC : ModuleRules
 			CopyToBinaries(Path.Combine(BinDir, "libbson-1.0.dll"), Target);
 			CopyToBinaries(Path.Combine(BinDir, "libmongoc-1.0.dll"), Target);
 		}
+		else if (Target.Platform == UnrealTargetPlatform.Linux)
+		{
+			Console.WriteLine("Using Linux Mongo/BSON library files");
+			// .h
+			string HeadersDir = ModuleDirectory + "/mongo-c-driver-linux/include/";
+			PublicIncludePaths.Add(Path.Combine(HeadersDir, "libbson-1.0"));
+			PublicIncludePaths.Add(Path.Combine(HeadersDir, "libmongoc-1.0"));
+
+			// .lib
+			string LibsDir = ModuleDirectory + "/mongo-c-driver-linux/lib/";
+			PublicLibraryPaths.Add(LibsDir);
+			PublicAdditionalLibraries.Add(Path.Combine(LibsDir,"libbson-static-1.0.a"));
+			PublicAdditionalLibraries.Add(Path.Combine(LibsDir,"libmongoc-static-1.0.a"));
+			}
 	}
 }
