@@ -150,7 +150,7 @@
  * MONGOC_ENABLE_SASL is set from configure to determine if we are
  * compiled with SASL support.
  */
-#define MONGOC_ENABLE_SASL 1
+#define MONGOC_ENABLE_SASL 0
 
 #if MONGOC_ENABLE_SASL != 1
 #  undef MONGOC_ENABLE_SASL
@@ -161,7 +161,7 @@
  * MONGOC_ENABLE_SASL_CYRUS is set from configure to determine if we are
  * compiled with Cyrus SASL support.
  */
-#define MONGOC_ENABLE_SASL_CYRUS 1
+#define MONGOC_ENABLE_SASL_CYRUS 0
 
 #if MONGOC_ENABLE_SASL_CYRUS != 1
 #  undef MONGOC_ENABLE_SASL_CYRUS
