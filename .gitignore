@@ -44,6 +44,10 @@
 *.VC.db
 *.VC.opendb
 
+# vim
+*.swp
+*.swo
+
 # Precompiled Assets
 SourceArt/**/*.png
 SourceArt/**/*.tga
