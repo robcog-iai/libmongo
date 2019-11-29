@@ -3,6 +3,8 @@
  * @brief BCON (BSON C Object Notation) Declarations
  */
 
+#include "bson/bson-prelude.h"
+
 /*    Copyright 2009-2013 MongoDB, Inc.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");

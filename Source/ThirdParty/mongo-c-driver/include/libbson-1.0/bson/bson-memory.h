@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
+#include "bson/bson-prelude.h"
+
 
 #ifndef BSON_MEMORY_H
 #define BSON_MEMORY_H
-
-
-#if !defined(BSON_INSIDE) && !defined(BSON_COMPILATION)
-#error "Only <bson/bson.h> can be included directly."
-#endif
 
 
 #include "bson/bson-macros.h"

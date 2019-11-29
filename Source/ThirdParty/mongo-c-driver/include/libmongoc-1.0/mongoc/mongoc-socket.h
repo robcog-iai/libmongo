@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
+#include "mongoc/mongoc-prelude.h"
+
 #ifndef MONGOC_SOCKET_H
 #define MONGOC_SOCKET_H
-
-#if !defined(MONGOC_INSIDE) && !defined(MONGOC_COMPILATION)
-#error "Only <mongoc/mongoc.h> can be included directly."
-#endif
 
 #include <bson/bson.h>
 #include "mongoc/mongoc-macros.h"
@@ -38,6 +36,10 @@
 #include <sys/socket.h>
 #include <sys/uio.h>
 #include <sys/un.h>
+#endif
+
+#if defined(_AIX) && !defined(HAVE_SA_SS_FAMILY)
+# define ss_family __ss_family
 #endif
 
 #include "mongoc/mongoc-iovec.h"

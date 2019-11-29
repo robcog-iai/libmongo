@@ -14,23 +14,22 @@
  * limitations under the License.
  */
 
+#include "mongoc/mongoc-prelude.h"
+
 #ifndef MONGOC_CLIENT_H
 #define MONGOC_CLIENT_H
 
-#if !defined(MONGOC_INSIDE) && !defined(MONGOC_COMPILATION)
-#error "Only <mongoc/mongoc.h> can be included directly."
-#endif
-
 #include <bson/bson.h>
 
-#include "mongoc/mongoc-macros.h"
 #include "mongoc/mongoc-apm.h"
+#include "mongoc/mongoc-client-side-encryption.h"
 #include "mongoc/mongoc-collection.h"
 #include "mongoc/mongoc-config.h"
 #include "mongoc/mongoc-cursor.h"
 #include "mongoc/mongoc-database.h"
 #include "mongoc/mongoc-gridfs.h"
 #include "mongoc/mongoc-index.h"
+#include "mongoc/mongoc-macros.h"
 #include "mongoc/mongoc-read-prefs.h"
 #ifdef MONGOC_ENABLE_SSL
 #include "mongoc/mongoc-ssl.h"
@@ -260,6 +259,14 @@ MONGOC_EXPORT (mongoc_change_stream_t *)
 mongoc_client_watch (mongoc_client_t *client,
                      const bson_t *pipeline,
                      const bson_t *opts);
+MONGOC_EXPORT (void)
+mongoc_client_reset (mongoc_client_t *client);
+
+MONGOC_EXPORT (bool)
+mongoc_client_enable_auto_encryption (mongoc_client_t *client,
+                                      mongoc_auto_encryption_opts_t *opts,
+                                      bson_error_t *error);
+
 BSON_END_DECLS
 
 

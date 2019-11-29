@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#include "bson/bson-prelude.h"
+
 
 #ifndef BSON_ATOMIC_H
 #define BSON_ATOMIC_H

@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
+#include "mongoc/mongoc-prelude.h"
+
 #ifndef MONGOC_DATABASE_H
 #define MONGOC_DATABASE_H
-
-#if !defined(MONGOC_INSIDE) && !defined(MONGOC_COMPILATION)
-#error "Only <mongoc/mongoc.h> can be included directly."
-#endif
 
 #include <bson/bson.h>
 
@@ -54,6 +52,11 @@ mongoc_database_add_user (mongoc_database_t *database,
                           bson_error_t *error);
 MONGOC_EXPORT (void)
 mongoc_database_destroy (mongoc_database_t *database);
+MONGOC_EXPORT (mongoc_cursor_t *)
+mongoc_database_aggregate (mongoc_database_t *db,
+                           const bson_t *pipeline,
+                           const bson_t *opts,
+                           const mongoc_read_prefs_t *read_prefs);
 MONGOC_EXPORT (mongoc_database_t *)
 mongoc_database_copy (mongoc_database_t *database);
 MONGOC_EXPORT (mongoc_cursor_t *)

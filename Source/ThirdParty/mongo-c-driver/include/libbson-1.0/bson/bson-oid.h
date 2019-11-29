@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
+#include "bson/bson-prelude.h"
+
 
 #ifndef BSON_OID_H
 #define BSON_OID_H
-
-
-#if !defined(BSON_INSIDE) && !defined(BSON_COMPILATION)
-#error "Only <bson/bson.h> can be included directly."
-#endif
 
 
 #include <time.h>
@@ -54,7 +51,8 @@ bson_oid_init_from_data (bson_oid_t *oid, const uint8_t *data);
 BSON_EXPORT (void)
 bson_oid_init_from_string (bson_oid_t *oid, const char *str);
 BSON_EXPORT (void)
-bson_oid_init_sequence (bson_oid_t *oid, bson_context_t *context);
+bson_oid_init_sequence (bson_oid_t *oid,
+                        bson_context_t *context) BSON_GNUC_DEPRECATED;
 BSON_EXPORT (void)
 bson_oid_to_string (const bson_oid_t *oid, char str[25]);
 

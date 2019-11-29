@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#include "bson/bson-prelude.h"
+
 
 #ifndef BSON_VALUE_H
 #define BSON_VALUE_H

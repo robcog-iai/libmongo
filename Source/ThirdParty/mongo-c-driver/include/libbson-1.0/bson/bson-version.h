@@ -16,7 +16,7 @@
 
 
 #if !defined (BSON_INSIDE) && !defined (BSON_COMPILATION)
-#error "Only <bson.h> can be included directly."
+#error "Only <bson/bson.h> can be included directly."
 #endif
 
 
@@ -37,7 +37,7 @@
  *
  * BSON minor version component (e.g. 2 if %BSON_VERSION is 1.2.3)
  */
-#define BSON_MINOR_VERSION (13)
+#define BSON_MINOR_VERSION (16)
 
 
 /**
@@ -51,16 +51,16 @@
 /**
  * BSON_PRERELEASE_VERSION:
  *
- * BSON prerelease version component (e.g. rc0 if %BSON_VERSION is 1.2.3-rc0)
+ * BSON prerelease version component (e.g. pre if %BSON_VERSION is 1.2.3-pre)
  */
-#define BSON_PRERELEASE_VERSION ()
+#define BSON_PRERELEASE_VERSION (pre)
 
 /**
  * BSON_VERSION:
  *
  * BSON version.
  */
-#define BSON_VERSION (1.13.0)
+#define BSON_VERSION (1.16.0-pre)
 
 
 /**
@@ -69,7 +69,7 @@
  * BSON version, encoded as a string, useful for printing and
  * concatenation.
  */
-#define BSON_VERSION_S "1.13.0"
+#define BSON_VERSION_S "1.16.0-pre"
 
 
 /**
