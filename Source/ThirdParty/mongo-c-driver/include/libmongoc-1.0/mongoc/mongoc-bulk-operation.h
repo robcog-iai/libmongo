@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#include "mongoc/mongoc-prelude.h"
+
 
 #ifndef MONGOC_BULK_OPERATION_H
 #define MONGOC_BULK_OPERATION_H

@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
+#include "mongoc/mongoc-prelude.h"
+
 #ifndef MONGOC_URI_H
 #define MONGOC_URI_H
-
-#if !defined(MONGOC_INSIDE) && !defined(MONGOC_COMPILATION)
-#error "Only <mongoc/mongoc.h> can be included directly."
-#endif
 
 #include <bson/bson.h>
 
@@ -54,6 +52,7 @@
 #define MONGOC_URI_READPREFERENCE "readpreference"
 #define MONGOC_URI_READPREFERENCETAGS "readpreferencetags"
 #define MONGOC_URI_REPLICASET "replicaset"
+#define MONGOC_URI_RETRYREADS "retryreads"
 #define MONGOC_URI_RETRYWRITES "retrywrites"
 #define MONGOC_URI_SAFE "safe"
 #define MONGOC_URI_SERVERSELECTIONTIMEOUTMS "serverselectiontimeoutms"
@@ -61,6 +60,20 @@
 #define MONGOC_URI_SLAVEOK "slaveok"
 #define MONGOC_URI_SOCKETCHECKINTERVALMS "socketcheckintervalms"
 #define MONGOC_URI_SOCKETTIMEOUTMS "sockettimeoutms"
+#define MONGOC_URI_TLS "tls"
+#define MONGOC_URI_TLSCERTIFICATEKEYFILE "tlscertificatekeyfile"
+#define MONGOC_URI_TLSCERTIFICATEKEYFILEPASSWORD "tlscertificatekeyfilepassword"
+#define MONGOC_URI_TLSCAFILE "tlscafile"
+#define MONGOC_URI_TLSALLOWINVALIDCERTIFICATES "tlsallowinvalidcertificates"
+#define MONGOC_URI_TLSALLOWINVALIDHOSTNAMES "tlsallowinvalidhostnames"
+#define MONGOC_URI_TLSINSECURE "tlsinsecure"
+#define MONGOC_URI_W "w"
+#define MONGOC_URI_WAITQUEUEMULTIPLE "waitqueuemultiple"
+#define MONGOC_URI_WAITQUEUETIMEOUTMS "waitqueuetimeoutms"
+#define MONGOC_URI_WTIMEOUTMS "wtimeoutms"
+#define MONGOC_URI_ZLIBCOMPRESSIONLEVEL "zlibcompressionlevel"
+
+/* Deprecated in MongoDB 4.2, use "tls" variants instead. */
 #define MONGOC_URI_SSL "ssl"
 #define MONGOC_URI_SSLCLIENTCERTIFICATEKEYFILE "sslclientcertificatekeyfile"
 #define MONGOC_URI_SSLCLIENTCERTIFICATEKEYPASSWORD \
@@ -68,11 +81,6 @@
 #define MONGOC_URI_SSLCERTIFICATEAUTHORITYFILE "sslcertificateauthorityfile"
 #define MONGOC_URI_SSLALLOWINVALIDCERTIFICATES "sslallowinvalidcertificates"
 #define MONGOC_URI_SSLALLOWINVALIDHOSTNAMES "sslallowinvalidhostnames"
-#define MONGOC_URI_W "w"
-#define MONGOC_URI_WAITQUEUEMULTIPLE "waitqueuemultiple"
-#define MONGOC_URI_WAITQUEUETIMEOUTMS "waitqueuetimeoutms"
-#define MONGOC_URI_WTIMEOUTMS "wtimeoutms"
-#define MONGOC_URI_ZLIBCOMPRESSIONLEVEL "zlibcompressionlevel"
 
 BSON_BEGIN_DECLS
 
@@ -111,6 +119,8 @@ mongoc_uri_set_password (mongoc_uri_t *uri, const char *password);
 MONGOC_EXPORT (bool)
 mongoc_uri_option_is_int32 (const char *key);
 MONGOC_EXPORT (bool)
+mongoc_uri_option_is_int64 (const char *key);
+MONGOC_EXPORT (bool)
 mongoc_uri_option_is_bool (const char *key);
 MONGOC_EXPORT (bool)
 mongoc_uri_option_is_utf8 (const char *key);
@@ -118,6 +128,10 @@ MONGOC_EXPORT (int32_t)
 mongoc_uri_get_option_as_int32 (const mongoc_uri_t *uri,
                                 const char *option,
                                 int32_t fallback);
+MONGOC_EXPORT (int64_t)
+mongoc_uri_get_option_as_int64 (const mongoc_uri_t *uri,
+                                const char *option,
+                                int64_t fallback);
 MONGOC_EXPORT (bool)
 mongoc_uri_get_option_as_bool (const mongoc_uri_t *uri,
                                const char *option,
@@ -130,6 +144,10 @@ MONGOC_EXPORT (bool)
 mongoc_uri_set_option_as_int32 (mongoc_uri_t *uri,
                                 const char *option,
                                 int32_t value);
+MONGOC_EXPORT (bool)
+mongoc_uri_set_option_as_int64 (mongoc_uri_t *uri,
+                                const char *option,
+                                int64_t value);
 MONGOC_EXPORT (bool)
 mongoc_uri_set_option_as_bool (mongoc_uri_t *uri,
                                const char *option,
@@ -172,7 +190,10 @@ MONGOC_EXPORT (bool)
 mongoc_uri_set_mechanism_properties (mongoc_uri_t *uri,
                                      const bson_t *properties);
 MONGOC_EXPORT (bool)
-mongoc_uri_get_ssl (const mongoc_uri_t *uri);
+mongoc_uri_get_ssl (const mongoc_uri_t *uri)
+   BSON_GNUC_DEPRECATED_FOR (mongoc_uri_get_tls);
+MONGOC_EXPORT (bool)
+mongoc_uri_get_tls (const mongoc_uri_t *uri);
 MONGOC_EXPORT (char *)
 mongoc_uri_unescape (const char *escaped_string);
 MONGOC_EXPORT (const mongoc_read_prefs_t *)

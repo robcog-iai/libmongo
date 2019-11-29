@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#include "mongoc/mongoc-prelude.h"
+
 #ifndef MONGOC_SERVER_DESCRIPTION_H
 #define MONGOC_SERVER_DESCRIPTION_H
 
@@ -39,6 +41,10 @@ mongoc_server_description_id (const mongoc_server_description_t *description);
 
 MONGOC_EXPORT (mongoc_host_list_t *)
 mongoc_server_description_host (const mongoc_server_description_t *description);
+
+MONGOC_EXPORT (int64_t)
+mongoc_server_description_last_update_time (
+   const mongoc_server_description_t *description);
 
 MONGOC_EXPORT (int64_t)
 mongoc_server_description_round_trip_time (

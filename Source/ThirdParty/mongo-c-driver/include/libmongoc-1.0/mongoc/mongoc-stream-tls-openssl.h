@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
+#include "mongoc/mongoc-prelude.h"
+
 #ifndef MONGOC_STREAM_TLS_OPENSSL_H
 #define MONGOC_STREAM_TLS_OPENSSL_H
-
-#if !defined(MONGOC_INSIDE) && !defined(MONGOC_COMPILATION)
-#error "Only <mongoc/mongoc.h> can be included directly."
-#endif
 
 #ifdef MONGOC_ENABLE_SSL_OPENSSL
 #include <bson/bson.h>

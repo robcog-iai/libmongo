@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+#if !defined(MONGOC_INSIDE) && !defined(MONGOC_COMPILATION)
+#error "Only <mongoc/mongoc.h> can be included directly."
+#endif
+
 
 #ifndef MONGOC_CONFIG_H
 #define MONGOC_CONFIG_H
@@ -178,18 +182,6 @@
 #  undef MONGOC_ENABLE_SASL_SSPI
 #endif
 
-
-/*
- * MONGOC_ENABLE_SASL_GSSAPI is set from configure to determine if we are
- * compiled with GSSAPI support.
- */
-#define MONGOC_ENABLE_SASL_GSSAPI 0
-
-#if MONGOC_ENABLE_SASL_GSSAPI != 1
-#  undef MONGOC_ENABLE_SASL_GSSAPI
-#endif
-
-
 /*
  * MONGOC_HAVE_SASL_CLIENT_DONE is set from configure to determine if we
  * have SASL and its version is new enough to use sasl_client_done (),
@@ -318,6 +310,16 @@
 #endif
 
 /*
+ * Set if we have zstd compression support
+ *
+ */
+#define MONGOC_ENABLE_COMPRESSION_ZSTD 0
+
+#if MONGOC_ENABLE_COMPRESSION_ZSTD != 1
+#  undef MONGOC_ENABLE_COMPRESSION_ZSTD
+#endif
+
+/*
  * Set if performance counters are available and not disabled.
  *
  */
@@ -370,11 +372,21 @@
 
 
 /*
+ * Set if we have Client Side Encryption support.
+ */
+
+#define MONGOC_ENABLE_CLIENT_SIDE_ENCRYPTION 0
+
+#if MONGOC_ENABLE_CLIENT_SIDE_ENCRYPTION != 1
+#  undef MONGOC_ENABLE_CLIENT_SIDE_ENCRYPTION
+#endif
+
+/*
  * NOTICE:
  * If you're about to update this file and add a config flag, make sure to
  * update:
  * o The bitfield in mongoc-handshake-private.h
- * o _get_config_bitfield() in mongoc-handshake.c
+ * o _mongoc_handshake_get_config_hex_string() in mongoc-handshake.c
  * o examples/parse_handshake_cfg.py
  * o test_handshake_config_string in test-mongoc-handshake.c
  */
